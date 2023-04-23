@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="mad.css">
+</head>
+
+<body>
+
+    <div class="container"></div>
+
+    <div class="controls">        
+        <input type="text" placeholder="Search">
+        <select id="type">
+            <option value="all" selected>All</option>
+            <option value="Apps">Application</option>
+            <option value="Movies">Movies</option>
+            <option value="TV">TV</option>
+            <option value="Games">Games</option>
+            <option value="Music">Music</option>
+            <option value="Anime">Anime</option>
+            <option value="Documentaries">Documentaries</option>
+            <option value="Other">Other</option>
+            <option value="trending">Trending</option>  
+            <option value="top-100">Top-100</option>            
+            <option value="XXX">XXX</option>
+        </select>
+
+        <select id="num">
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <button id="search_btn">Search</button>
+        <button id="clear_btn">Clear</button>
+    </div>
+
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>
+                    Title
+                </th>
+            </tr>
+        </thead>
+
+        <tbody id="result_table">
+
+        </tbody>
+
+
+
+    </table>
+
+    <iframe id="search_results"></iframe>
+    <iframe id="magnets"></iframe>
+
+</body>
+
+<!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script> -->
+    
+<script src="jq.js"></script>    
+<script src="madgear.js"></script>
+</html>
