@@ -111,4 +111,118 @@ function saveTextToDatabase(text, callback) {
   xhr.send(data);
 }
 
+
+// Define the context menu item
+chrome.contextMenus.create({
+  title: "Copy selected text",
+  contexts: ["selection"],
+  onclick: function(info) {
+    // Get the selected text
+    var selectedText = info.selectionText;
+    
+    // Send a POST request to the server to save the text to the database
+    fetch("https://example.com/save-text", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        text: selectedText
+      })
+    }).then(function(response) {
+      console.log("Text copied and saved successfully!");
+    }).catch(function(error) {
+      console.error("Error saving text: " + error);
+    });
+  }
+});
+
+// Function to check for new links on the page every 30 seconds
+function checkForNewLinks() {
+  // Get the current tab
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    var currentTab = tabs[0];
+    
+    // Get the current URL of the tab
+    var currentUrl = currentTab.url;
+    
+    // Send a GET request to the server to check for new links
+    fetch("https://example.com/check-links?url=" + encodeURIComponent(currentUrl))
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        // Handle the response data
+        if (data.newLinks.length > 0) {
+          console.log("New links found on the page!");
+          console.log(data.newLinks);
+        }
+      })
+      .catch(function(error) {
+        console.error("Error checking for new links: " + error);
+      });
+  });
+}
+
+// Schedule the checkForNewLinks function to run every 30 seconds
+setInterval(checkForNewLinks, 30000);
+
+
+// Function to check for videos on the current tab
+function checkForVideos() {
+  // Get the current tab
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    var currentTab = tabs[0];
+
+    // Check if the tab has any video elements
+    chrome.tabs.executeScript(currentTab.id, {code: 'document.getElementsByTagName("video").length;'}, function(results) {
+      if (results && results[0] > 0) {
+        console.log("Videos found on the page!");
+      }
+    });
+  });
+}
+
+// Schedule the checkForVideos function to run every 1 second
+setInterval(checkForVideos, 1000);
+
+// Define the context menu item
+chrome.contextMenus.create({
+  title: "Copy selected text",
+  contexts: ["selection"],
+  onclick: function(info) {
+    // Get the selected text
+    var selectedText = info.selectionText;
+    
+    // Send a POST request to the server to save the text to the database
+    fetch("https://example.com/save-text", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        text: selectedText
+      })
+    }).then(function(response) {
+      console.log("Text copied and saved successfully!");
+    }).catch(function(error) {
+      console.error("Error saving text: " + error);
+    });
+  }
+});
+
+// Function to open the popup window
+function openPopup() {
+  // Create a new window
+  chrome.windows.create({
+    url: "popup.html",
+    type: "popup",
+    width: 400,
+    height: 400
+  });
+}
+
+// Add a listener for the browser action
+chrome.browserAction.onClicked.addListener(openPopup);
+
 </script>
