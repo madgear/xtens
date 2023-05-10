@@ -1,3 +1,42 @@
+
+
+{
+  "manifest_version": 3,
+  "name": "My Extension",
+  "version": "1.0",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "contextMenus",
+    "clipboardWrite"
+  ]
+}
+
+
+chrome.contextMenus.create({
+  title: "Copy Highlighted Text",
+  contexts: ["selection"],
+  onclick: function(info, tab) {
+    // Get the highlighted text
+    var text = info.selectionText;
+    
+    // Write the text to the clipboard
+    navigator.clipboard.writeText(text);
+    
+    // Show a notification to indicate success
+    chrome.notifications.create({
+      type: "basic",
+      title: "Text Copied",
+      message: "Highlighted text copied to clipboard."
+    });
+  }
+});
+
+
+
+
+
 setInterval(() => {
   console.log("Extension running in the background...");
 }, 5000);
