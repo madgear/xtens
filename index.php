@@ -16,6 +16,15 @@
 
 <?php
 
+
+fetch('http://example.com/myscript.php', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+  },
+  body: 'mytext=こんにちは'
+})
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
