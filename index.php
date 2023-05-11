@@ -17,6 +17,16 @@
 <?php
 
 
+
+header('Content-Type: text/html; charset=utf-8');
+
+if (isset($_GET['text'])) {
+  $mytext = urldecode($_GET['text']);
+  echo $mytext;
+} else {
+  echo 'Text not provided';
+}
+
 fetch('http://example.com/myscript.php', {
   method: 'POST',
   headers: {
