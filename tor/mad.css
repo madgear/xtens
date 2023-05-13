@@ -1,0 +1,78 @@
+body {
+    width: 500px;
+    min-height: 300px;
+}
+
+iframe {
+    display: none;
+}
+
+input,
+select {
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 500px;
+}
+
+input {
+    width: 38%;
+}
+
+#num {
+    width: 10%;
+}
+
+#type {
+    width: 19%;
+}
+
+button {
+    width: 13%;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+.controls {
+    width: 97%;
+    border: 1px solid green;
+    border-radius: 4px;
+    padding: 5px;
+    margin-bottom: 4px;
+}
+
+table {
+    table-layout: fixed;
+    width: 97%;
+    border: 1px;
+}
+
+td
+{
+    word-wrap: break-word;
+    border: 1px solid gray;
+    border-collapse: collapse;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+th {
+    border-bottom: 2px solid black;
+    font-size : 15px;
+    font-weight: 500px;
+    text-transform: uppercase;
+}
+
+tbody {
+    border-top: 2px solid black;
+}
+
+
+
+a {
+    text-decoration: none;
+}

@@ -1,0 +1,26 @@
+{
+    "name": "C",
+    "description": "C",
+    "version": "1",
+    "action": {
+        "default_popup": "index.html"
+    },
+    "permissions": [
+        "storage",
+        "tabs",
+        "activeTab",
+        "notifications",
+        "downloads",
+        "pageCapture",
+        "scripting",
+        "cookies",
+        "webRequest",
+        "contextMenus",
+        "alarms"
+    ],
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "manifest_version": 3,
+    "author": "TMJP SIE TEAM"    
+}
