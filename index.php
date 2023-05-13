@@ -1,5 +1,3 @@
-
-
 {
   "manifest_version": 3,
   "name": "My Extension",
@@ -12,11 +10,7 @@
     "clipboardWrite"
   ]
 }
-
-
 <?php
-
-
 
 header('Content-Type: text/html; charset=utf-8');
 
@@ -305,5 +299,56 @@ chrome.runtime.onInstalled.addListener(function() {
   console.log("Extension started!");
 });
 
+
+</script>
+
+<script>
+    // A function that returns a Promise that resolves after a given delay
+    function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // An async function that uses delay to simulate a long-running task
+    async function longTask() {
+        console.log('Starting long task');
+        await delay(2000);
+        console.log('Long task complete');
+    }
+
+    // An async function that waits for longTask to complete before running another task
+    async function main() {
+        console.log('Starting main task');
+        await longTask();
+        console.log('Main task complete');
+    }
+
+    // Call the main function
+    main();
+
+</script>
+
+<script>
+    // Find the button element
+    const button = document.querySelector('#my-button');
+
+    // Add an event listener to the button
+    button.addEventListener('click', async () => {
+        // Click the button
+        button.click();
+
+        // Wait for the next event
+        await new Promise(resolve => {
+            // Add an event listener to the window
+            window.addEventListener('my-event', () => {
+                // Remove the event listener
+                window.removeEventListener('my-event', arguments.callee);
+                // Resolve the promise
+                resolve();
+            });
+        });
+
+        // Run the next command
+        console.log('Next command');
+    });
 
 </script>
