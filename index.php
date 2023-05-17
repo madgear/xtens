@@ -412,3 +412,90 @@ chrome.runtime.onInstalled.addListener(function() {
   </script>
 </body>
 </html>
+
+
+
+//SERVER SIDE
+
+
+
+<?php
+require 'vendor/autoload.php';
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\Shared\Html;
+
+// Retrieve the HTML content from the client
+$htmlContent = $_POST['htmlContent'];
+
+// Create a new PHPWord object
+$phpWord = new PhpWord();
+
+// Add a section
+$section = $phpWord->addSection();
+
+// Convert the HTML content to DOCX format
+Html::addHtml($section, $htmlContent, true, false);
+
+// Process and embed images
+$images = $section->getElementsRecursive(\PhpOffice\PhpWord\Element\AbstractContainer::IMAGE);
+foreach ($images as $image) {
+    $imagePath = $image->getSrc();
+    $imageContent = file_get_contents($imagePath);
+    $imageType = pathinfo($imagePath, PATHINFO_EXTENSION);
+    $imageName = uniqid('img_') . '.' . $imageType;
+    $image->setImageValue($imagePath);
+    $phpWord->addImage($imagePath, array('width' => 400, 'height' => 300, 'align' => 'center'));
+}
+
+// Save the converted DOCX file
+$filename = 'page.docx';
+$objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+$objWriter->save($filename);
+
+// Set the appropriate headers for file download
+header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+header('Content-Disposition: attachment; filename="' . $filename . '"');
+header('Content-Length: ' . filesize($filename));
+
+// Send the converted DOCX file to the client
+readfile($filename);
+
+// Clean up - delete the temporary file
+unlink($filename);
+?>
+
+
+//script
+
+
+// Function to send the HTML content to the server for conversion
+function savePageAsDocx() {
+  // Retrieve the HTML content of the current page
+  const htmlContent = document.documentElement.outerHTML;
+
+  // Create a FormData object to send the data to the server
+  const formData = new FormData();
+  formData.append('htmlContent', htmlContent);
+
+  // Send the data to the server using fetch
+  fetch('http://example.com/convert.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.blob())
+  .then(blob => {
+    // Create a link element to trigger the download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'page.docx';
+    link.click();
+  })
+  .catch(error => {
+    console.error('Error saving page as DOCX:', error);
+  });
+}
+
+// Call the savePageAsDocx function to initiate the process
+savePageAsDocx();
+
