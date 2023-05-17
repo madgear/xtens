@@ -499,3 +499,26 @@ function savePageAsDocx() {
 // Call the savePageAsDocx function to initiate the process
 savePageAsDocx();
 
+
+
+//phpoffice
+
+
+require_once 'path/to/PHPWord/src/PhpWord/Autoloader.php';
+require_once 'path/to/PHPWord/src/PhpWord/PhpWord.php';
+
+
+//instructions
+
+
+Visit the PHPOffice GitHub repository for PHPWord: https://github.com/PHPOffice/PHPWord
+
+Click on the "Code" button and select "Download ZIP" to download the latest version of PHPWord.
+
+Extract the downloaded ZIP file to get the PHPWord source code.
+
+Copy the src folder from the extracted PHPWord source code and place it in your project directory.
+
+In your PHP script, include the necessary PHPWord files using require_once or include 
+
+
