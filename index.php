@@ -352,3 +352,63 @@ chrome.runtime.onInstalled.addListener(function() {
     });
 
 </script>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Save Page as DOCX</title>
+  <script src="https://unpkg.com/html-docx-js/dist/html-docx.js"></script>
+</head>
+<body>
+  <button onclick="savePageAsDocx()">Save Page as DOCX</button>
+
+  <script>
+    function savePageAsDocx() {
+      const htmlContent = document.documentElement.outerHTML;
+      const images = Array.from(document.querySelectorAll('img'));
+
+      const imagePromises = images.map(image => {
+        return new Promise((resolve, reject) => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const img = new Image();
+
+          img.onload = function() {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            const dataUrl = canvas.toDataURL('image/jpeg');
+            resolve(dataUrl);
+          };
+
+          img.onerror = function() {
+            reject(new Error('Image loading failed'));
+          };
+
+          img.src = image.src;
+        });
+      });
+
+      Promise.all(imagePromises)
+        .then(imageDataUrls => {
+          const options = {
+            orientation: 'portrait',
+            includeDefaultStyles: true,
+            images: imageDataUrls
+          };
+
+          const convertedDocx = htmlDocx.asBlob(htmlContent, options);
+
+          const downloadLink = document.createElement('a');
+          downloadLink.href = URL.createObjectURL(convertedDocx);
+          downloadLink.download = 'page.docx';
+          downloadLink.click();
+        })
+        .catch(error => {
+          console.error('Error saving page as DOCX:', error);
+        });
+    }
+  </script>
+</body>
+</html>
