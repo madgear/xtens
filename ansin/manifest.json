@@ -1,0 +1,21 @@
+{
+    "manifest_version": 3,
+    "name": "Anshin",
+    "version": "1.0",
+    "description": "",
+    "permissions": ["tabs","activeTab"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://anshin.tmjpbpo.net/*"
+            ],
+            "js": [ 
+                
+                "content.js"
+            ]
+        }
+    ]
+}
